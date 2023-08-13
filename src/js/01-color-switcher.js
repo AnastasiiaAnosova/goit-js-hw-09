@@ -1,10 +1,28 @@
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
 
-startBtn.addEventListener('click', onChangeBackground);
+let colorBackground;
+let timeIdChangeColor = null;
+stopBtn.setAttribute('disabled', true);
 
-function onChangeBackground() {
-    
+startBtn.addEventListener('click', () => {
+    startBtn.setAttribute('disabled', true);
+    stopBtn.removeAttribute('disabled');
+    timeIdChangeColor = setInterval(
+        onStartChangeColor, 1000);
+});
+
+stopBtn.addEventListener('click', onStopChangeColor)
+
+function onStartChangeColor() {
+    colorBackground = getRandomHexColor();
+    document.body.style.backgroundColor = colorBackground;
+}
+
+function onStopChangeColor() {
+    startBtn.removeAttribute('disabled');
+    stopBtn.setAttribute('disabled', true);
+    clearInterval(timeIdChangeColor);
 }
 
 function getRandomHexColor() {
